@@ -3,12 +3,12 @@ from player import Player
 from deck import Deck
 from card import Card
 from summators import BlackjackCardSummator
-from notification import Publisher
-import notification
+# from notification import Publisher
+# import notification
 import abc
 
 
-class Game(abc.ABC, Publisher):
+class Game(abc.ABC):
     def __init__(self, players: List[Player], deck: Deck):
         self.players = players
         self.deck = deck
@@ -33,11 +33,17 @@ class BlackjackGame(Game):
         super().__init__(players, deck)
         if deck is None:
             self.deck = self._generate_deck()
-            
-    # def shuffle(self):
-    #     print('before')
-    #     super().shuffle()
-    #     print('after')
+
+    def set_startfn(self, startfn):
+        self._startfn = startfn
+    
+    def set_finishfn(self, finishfn):
+        self._finishfn = finishfn
+                
+    def shuffle(self):
+        print('before')
+        super().shuffle()
+        print('after')
          
     def _generate_deck(self) -> Deck:
         VALUES = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A']
@@ -56,10 +62,11 @@ class BlackjackGame(Game):
 
     def run(self):
         self.shuffle()
-        for player in self.players:
-            self.attach(notification.game_start, player)
+        # for player in self.players:
+        #     self.attach(notification.game_start, player)
         self.deal()
-        self.notify(notification.game_start)
+        self._startfn
+        # self.notify(notification.game_start)
 
     def take_card(self, player):
         self.deck.move_cards(player, 1)
