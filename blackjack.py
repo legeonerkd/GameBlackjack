@@ -173,6 +173,16 @@ from player import Player
 #print('Mikhail: ', mikhail.cards)
 #print('Deck: ', deck.cards)
 
+def start_game(players):
+    print("Game started")
+    for p in players:
+        print('player %s: %s' % (p.name, p))
+
+def finish_game(players):
+    print ('Game finished')
+    for p in players:
+        print('player %s: %s' %(p.name, p))
+
 
 players = [
     # Player('Tom'),
@@ -181,6 +191,7 @@ players = [
 ]
 
 game = BlackjackGame(players)
+game.set_startfn(startfn=start_game)
 game.run()
 
 def show_state(player):
@@ -200,10 +211,10 @@ for player in players:
     while True: 
         if choice == 'y':
             overflow = game.take_card(player)
-            #! if overflow:
-                #! break
             show_state(player)
-        
+            if BlackjackCardSummator.get_sum(player.cards) > 21:
+                print('Owerflow')
+                break
         elif choice == 'n':
             break
 
