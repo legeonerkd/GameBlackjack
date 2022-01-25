@@ -6,6 +6,10 @@ import json
 # set the project root directory as the static folder, you can set others.
 app = Flask(__name__, static_url_path='/static')
 
+@app.route("/hello")
+def hello():
+   return "<p>Hello, World!</p>"
+
 @app.route('/')
 def root():
     return render_template('example.html')
@@ -27,7 +31,7 @@ def give_cards():
 
 #JSON JavaScript Object Notation
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True, host='0.0.0.0', port=8080)
     # from gevent import pywsgi
     # from geventwebsocket.handler import WebSocketHandler
     # server = pywsgi.WSGIServer(('', 5000), app, handler_class=WebSocketHandler)

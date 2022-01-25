@@ -65,10 +65,11 @@ class BlackjackGame(Game):
         # for player in self.players:
         #     self.attach(notification.game_start, player)
         self.deal()
-        self._startfn
+        self._startfn(self.players)
+        self._finishfn(self.players)
         # self.notify(notification.game_start)
 
-    def take_card(self, player):
+    def take_card(self, player) -> bool:
         self.deck.move_cards(player, 1)
         return BlackjackCardSummator.get_sum(player.cards) > 21
 

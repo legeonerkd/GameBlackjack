@@ -192,6 +192,7 @@ players = [
 
 game = BlackjackGame(players)
 game.set_startfn(startfn=start_game)
+game.set_finishfn(finishfn=finish_game)
 game.run()
 
 def show_state(player):
@@ -212,12 +213,11 @@ for player in players:
         if choice == 'y':
             overflow = game.take_card(player)
             show_state(player)
-            if BlackjackCardSummator.get_sum(player.cards) > 21:
-                print('Owerflow')
+            if overflow:
+                print('Overflow')
                 break
         elif choice == 'n':
             break
-
         else:
             print('Incorrect input. Try to input (y/n)')
 
